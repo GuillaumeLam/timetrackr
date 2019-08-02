@@ -1,0 +1,55 @@
+#:kivy 1.11.1
+
+<TimerScreen>:
+	BoxLayout:
+		orientation: 'vertical'
+		canvas:
+			Color:
+				rgba: 0.09, 0.09, 0.09, 1
+			Rectangle:
+				size:
+					self.width * app.screen_percentage_x, \
+					self.height * app.screen_percentage_y
+				pos:
+					self.parent.center_x - self.width * app.screen_percentage_x / 2., \
+					self.parent.center_y - self.height * app.screen_percentage_y / 2.
+
+	Button:
+		text: root.button_text
+		font_size: 20
+		background_color: root.button_color
+		size_hint: None, None
+		size:
+			self.parent.width * app.button_x, \
+			self.parent.height * app.button_y
+		pos:
+			self.parent.width / 2. - self.width / 2., \
+			self.parent.height * app.button_percentage - self.height / 2.
+		on_press: root.toggle()
+
+	BoxLayout:
+		orientation: 'vertical'
+		size_hint: None, None
+        size:
+        	self.parent.width * app.screen_percentage_x, \
+        	self.parent.height * app.main_stats_y
+        pos_hint: {'x': (1 - app.screen_percentage_x)/2., 'y': (1 - app.screen_percentage_y)/2.}
+		canvas:
+            Color:
+                rgba: 0.9, 0.9, 0.9, 0.05
+            Rectangle:
+                size:
+                    self.width, self.height
+                pos: self.x, self.y
+        Label:
+            text: 'smth'
+            font_size: 70
+        ProgressBar:
+            max: 100
+            value: root.pb_value
+        Label:
+            text: 'smth2'
+            font_size: 70
+        Label:
+            text: 'smth3'
+            font_size: 70

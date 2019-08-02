@@ -1,23 +1,9 @@
-#:kivy 1.0.9
+#:kivy 1.11.1
+#: include settingsscreen/settingsScreen.kv
+#: include statsscreen/statsScreen.kv
+#: include timerscreen/timerScreen.kv
 
-<MainScreen>:
-	BoxLayout:
-		Label:
-			text: 'Main menu'
-			font_size: 70
-			center: self.parent.center
-
-<StatsScreen>:
-	BoxLayout:
-		Label:
-            text: 'stats'
-            font_size: 70
-            center: self.parent.center
-
-
-<SettingsScreen>:
-	BoxLayout:
-		Label:
-            text: 'settings'
-            font_size: 70
-            center: self.parent.center
+<TimeTrackr>:
+	SettingsScreen:
+	TimeTrackr:
+	StatsScreen:
