@@ -1,5 +1,33 @@
 #:kivy 1.0.9
 
+<CircularProgressBar>:
+	BoxLayout:
+		center: self.parent.center
+		size_hint: None, None
+		size: self.parent.width * 0.9, self.parent.height * 0.9
+		canvas:
+			Color:
+				rgb: 0.26, 0.26, 0.26
+            Ellipse:
+                pos:self.pos
+                size:self.size
+
+            Color:
+                rgb: 1, 0, 0
+            Ellipse:
+                pos:self.pos
+                size:self.size
+                angle_end: (0.001 if root.value_normalized == 0 else root.value_normalized * 360)
+
+            Color:
+                rgb: 0, 0, 0
+            Ellipse:
+                pos: self.pos[0] + root.thickness / 2, self.pos[1] + root.thickness / 2
+                size: self.size[0] - root.thickness, self.size[1] - root.thickness
+
+		Label:
+			text: root.label_text
+
 <TimerScreen>:
 	BoxLayout:
 		orientation: 'vertical'
