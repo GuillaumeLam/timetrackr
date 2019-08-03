@@ -15,6 +15,7 @@ class TimeTrackrApp(App):
 	button_y = NumericProperty(0.55)
 	button_percentage = NumericProperty(0.7)
 	main_stats_y = NumericProperty(0.4)
+	stats_subdivision_y = NumericProperty(0.33)
 
 	def build(self):
 		carousel = Carousel(direction='right')

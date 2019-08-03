@@ -16,7 +16,7 @@
 
 	Button:
 		text: root.button_text
-		font_size: 20
+		font_size: 50
 		background_color: root.button_color
 		size_hint: None, None
 		size:
@@ -41,15 +41,100 @@
                 size:
                     self.width, self.height
                 pos: self.x, self.y
-        Label:
-            text: 'Session'
-            font_size: 70
-        ProgressBar:
-            max: 100
-            value: root.pb_value
-        Label:
-            text: 'Daily'
-            font_size: 70
-        Label:
-            text: 'Semester'
-            font_size: 70
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            size:
+                self.parent.width, \
+                self.parent.height * app.stats_subdivision_y
+            pos_hint: {'y': (1 - app.stats_subdivision_y)/2.}
+	        canvas:
+                Color:
+                    rgba: 0.9, 0.9, 0.9, 0.1
+                Rectangle:
+                    size: self.width*0.99, self.height*0.95
+                    pos: self.x + self.width*0.01/2, self.y + self.height*0.05/2
+	        BoxLayout:
+	            size_hint: None, None
+	            size:
+	                self.parent.width * 0.3, self.parent.height
+	            canvas:
+                    Color:
+                        rgba: 0.9, 0.9, 0.9, 0.1
+                    Rectangle:
+                        size: self.width*0.94, self.height*0.95
+                        pos: self.x + self.width*0.06/2, self.y + self.height*0.05/2
+	            Label:
+	                text: "Session"
+	                font_size: 30
+	                pos: self.parent.x, self.parent.y
+	        BoxLayout:
+	            orientation: 'vertical'
+	            size_hint: None, None
+	            size:
+	                self.parent.width * 0.7, self.parent.height
+		        Label:
+		            text: 'Total: ' + root.time_label
+		            font_size: 30
+		        Label:
+		            text: 'Start: ' + root.start_time_label
+		            font_size: 35
+		BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            size:
+                self.parent.width, \
+                self.parent.height * app.stats_subdivision_y
+            pos_hint: {'y': (1 - app.stats_subdivision_y)/2.}
+            canvas:
+                Color:
+                    rgba: 0.9, 0.9, 0.9, 0.1
+                Rectangle:
+                    size: self.width*0.99, self.height*0.95
+                    pos: self.x + self.width*0.01/2, self.y + self.height*0.05/2
+            BoxLayout:
+                size_hint: None, None
+                size:
+                    self.parent.width * 0.3, self.parent.height
+                canvas:
+                    Color:
+                        rgba: 0.9, 0.9, 0.9, 0.1
+                    Rectangle:
+                        size: self.width*0.94, self.height*0.95
+                        pos: self.x + self.width*0.06/2, self.y + self.height*0.05/2
+                Label:
+                    text: "Daily"
+                    font_size: 30
+                    pos: self.parent.x, self.parent.y
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: None, None
+                size:
+                    self.parent.width * 0.7, self.parent.height
+                ProgressBar:
+                    max: 100
+                    value: 50 # root.pb_value
+                    size_hint_x: 0.98
+                Label:
+                    text: 'Target: ' + root.time_label
+                    font_size: 30
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            size:
+                self.parent.width, \
+                self.parent.height * app.stats_subdivision_y
+            pos_hint: {'y': (1 - app.stats_subdivision_y)/2.}
+            canvas:
+                Color:
+                    rgba: 0.9, 0.9, 0.9, 0.1
+                Rectangle:
+                    size: self.width*0.99, self.height*0.95
+                    pos: self.x + self.width*0.01/2, self.y + self.height*0.05/2
+            Label:
+                text: "Semester:"
+                font_size: 30
+                size: self.parent.width * 0.8, self.parent.height
+            BoxLayout:
+                id: semester_prog
+                size: self.parent.width * 0.2, self.parent.height
