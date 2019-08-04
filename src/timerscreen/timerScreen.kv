@@ -2,28 +2,29 @@
 
 <CircularProgressBar>:
 	BoxLayout:
+		id: cpb_inner
 		center: self.parent.center
 		size_hint: None, None
-		size: self.parent.width * 0.9, self.parent.height * 0.9
+		size: self.parent.height * 0.9, self.parent.height * 0.9
 		canvas:
 			Color:
 				rgb: 0.26, 0.26, 0.26
             Ellipse:
-                pos:self.pos
-                size:self.size
+                pos: self.pos
+                size: self.size[0], self.size[1]
 
             Color:
                 rgb: 1, 0, 0
             Ellipse:
-                pos:self.pos
-                size:self.size
+                pos: self.pos
+                size: self.size[0], self.size[1]
                 angle_end: (0.001 if root.value_normalized == 0 else root.value_normalized * 360)
 
             Color:
                 rgb: 0, 0, 0
             Ellipse:
-                pos: self.pos[0] + root.thickness / 2, self.pos[1] + root.thickness / 2
-                size: self.size[0] - root.thickness, self.size[1] - root.thickness
+                pos: self.pos[0] + dp(root.thickness) / 2, self.pos[1] + dp(root.thickness) / 2
+                size: self.size[0] - dp(root.thickness), self.size[1] - dp(root.thickness)
 
 		Label:
 			text: root.label_text
@@ -44,7 +45,7 @@
 
 	Button:
 		text: root.button_text
-		font_size: 50
+		font_size: sp(50)
 		background_color: root.button_color
 		size_hint: None, None
 		size:
@@ -94,7 +95,7 @@
                         pos: self.x + self.width*0.06/2, self.y + self.height*0.05/2
 	            Label:
 	                text: "Session"
-	                font_size: 30
+	                font_size: sp(28)
 	                pos: self.parent.x, self.parent.y
 	        BoxLayout:
 	            orientation: 'vertical'
@@ -102,11 +103,11 @@
 	            size:
 	                self.parent.width * 0.7, self.parent.height
 		        Label:
-		            text: 'Total: ' + root.time_label
-		            font_size: 30
+		            text: 'Total: ' + root.work_time_label
+		            font_size: sp(25)
 		        Label:
 		            text: 'Start: ' + root.start_time_label
-		            font_size: 35
+		            font_size: sp(25)
 		BoxLayout:
             orientation: 'horizontal'
             size_hint: None, None
@@ -132,7 +133,7 @@
                         pos: self.x + self.width*0.06/2, self.y + self.height*0.05/2
                 Label:
                     text: "Daily"
-                    font_size: 30
+                    font_size: sp(28)
                     pos: self.parent.x, self.parent.y
             BoxLayout:
                 orientation: 'vertical'
@@ -141,11 +142,11 @@
                     self.parent.width * 0.7, self.parent.height
                 ProgressBar:
                     max: 100
-                    value: 50 # root.pb_value
+                    value: root.pb_value
                     size_hint_x: 0.98
                 Label:
-                    text: 'Target: ' + root.time_label
-                    font_size: 30
+                    text: 'Target: ' + root.daily_target_label
+                    font_size: sp(25)
         BoxLayout:
             orientation: 'horizontal'
             size_hint: None, None
@@ -161,8 +162,11 @@
                     pos: self.x + self.width*0.01/2, self.y + self.height*0.05/2
             Label:
                 text: "Semester:"
-                font_size: 30
+                font_size: sp(28)
                 size: self.parent.width * 0.8, self.parent.height
             BoxLayout:
                 id: semester_prog
                 size: self.parent.width * 0.2, self.parent.height
+                center: self.parent.center
+				CircularProgressBar:
+					id: cpb
