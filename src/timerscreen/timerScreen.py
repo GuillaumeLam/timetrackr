@@ -12,22 +12,43 @@ class TimerScreen(Screen):
     def time_str(time, hour, min, sec, format):
         time_str = ''
         if hour:
+            time_hour = time.hour
             if format == 'day_time':
-                time_str = time_str + str(time.hour % 24)
+                if time_hour < 10:
+                    time_str = time_str + '0' + str(time_hour)
+                else:
+                    time_str = time_str + str(time_hour)
             elif format == 'timer':
-                time_str = time_str + str(time.hour % 24) + 'h'
+                time_str = time_str + str(time_hour) + 'h'
         if min:
+            time_min = time.minute
             if format == 'day_time':
-                time_str = time_str + ':' + str(time.minute % 60)
+                if time_min < 10:
+                    time_str = time_str + ':0' + str(time_min)
+                else:
+                    time_str = time_str + ':' + str(time_min)
             elif format == 'timer':
-                time_str = time_str + ' ' + str(time.minute % 60) + 'min'
+                time_str = time_str + ' ' + str(time_min) + 'min'
         if sec:
+            time_sec = time.second
             if format == 'day_time':
-                time_str = time_str + ':' + str(time.second % 60)
+                if time_sec < 10:
+                    time_str = time_str + ':0' + str(time_sec)
+                else:
+                    time_str = time_str + ':' + str(time_sec)
             elif format == 'timer':
-                time_str = time_str + ' ' + str(time.second % 60) + 's'
+                time_str = time_str + ' ' + str(time_sec) + 's'
 
         return time_str
+
+    @staticmethod
+    def add_time(time_clock, additional_time):
+        if type(additional_time) is timedelta:
+            return (datetime(1, 1, 1, time_clock.hour, time_clock.minute, time_clock.second) + additional_time).time()
+        elif type(additional_time) is time:
+            return (datetime(1, 1, 1, time_clock.hour, time_clock.minute, time_clock.second) +
+                    timedelta(hours=additional_time.hour, minutes=additional_time.minute, seconds=additional_time.second)
+                    ).time()
 
     button_text = StringProperty('START')
     button_color = ColorProperty((0, 1, 0, 1))
@@ -85,13 +106,11 @@ class TimerScreen(Screen):
 
     def update_clock(self, work_or_down, *args):
         if work_or_down == 'work':
-            self.work_time = (datetime(1, 1, 1, self.work_time.hour, self.work_time.minute, self.work_time.second)
-                              + timedelta(seconds=1)).time()
+            self.work_time = self.add_time(self.work_time, time(0, 0, 1))
             self.work_time_label = self.time_str(self.work_time, True, True, True, 'timer')
             self.update_pb()
         elif work_or_down == 'down':
-            self.down_time = (datetime(1, 1, 1, self.down_time.hour, self.down_time.minute, self.down_time.second)
-                              + timedelta(seconds=1)).time()
+            self.down_time = self.add_time(self.down_time, time(0, 0, 1))
 
         self.cpb.update()
 
