@@ -20,7 +20,6 @@ class SettingsScreen(Screen):
     def __init__(self, **kwargs):
         super(SettingsScreen, self).__init__(**kwargs)
         self.ts = App.get_running_app().timerscreen
-        print(self.ts.daily_target)
         self.set_default_spinner(self.ts.daily_target)
 
     def on_spinner_select(self):
@@ -46,10 +45,8 @@ class SettingsScreen(Screen):
 
     def set_default_spinner(self, default_time):
         hour = default_time.hour
-        print(hour)
         if hour < 10:
             self.ids.h_spin.text = '0' + str(hour)
-            print(self.h_spin_default)
         else:
             self.ids.h_spin.text = str(hour)
 
