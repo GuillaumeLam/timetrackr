@@ -66,6 +66,8 @@ class TimerScreen(Screen):
     daily_target = time(8, 0, 0)
     daily_target_label = StringProperty(time_str.__func__(daily_target, True, True, False, 'timer'))
 
+    down_time_limit = time(0, 15, 0)
+
     def __init__(self, **kwargs):
         super(TimerScreen, self).__init__(**kwargs)
         self.time_state = 'stopped'
@@ -81,7 +83,7 @@ class TimerScreen(Screen):
             self.button_text = 'STOP'
             self.button_color = (1, 0, 0, 1)
 
-            if self.get_time_sec(self.down_time) >= self.get_time_sec(time(0, 15, 0)):
+            if self.get_time_sec(self.down_time) >= self.get_time_sec(self.down_time_limit):
                 self.work_time = time(0, 0, 0)
                 self.work_time_label = self.time_str(self.work_time, True, True, True, 'timer')
                 self.start_session_start()

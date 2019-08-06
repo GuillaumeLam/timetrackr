@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import datetime
 from kivy.app import App
 from kivy.properties import NumericProperty
 from kivy.uix.carousel import Carousel
@@ -22,16 +22,19 @@ class TimeTrackrApp(App):
 		App.__init__(self)
 		self.settingscreen = None
 		self.timerscreen = None
+		self.statscreen = None
 		self.pause_time = None
 
 	def build(self):
 		carousel = Carousel(direction='right')
-		self.settingscreen = SettingsScreen(name='settings')
-		carousel.add_widget(self.settingscreen)
 		self.timerscreen = TimerScreen(name='main')
+		self.settingscreen = SettingsScreen(name='settings')
+		self.statscreen = StatsScreen(name='stats')
+
+		carousel.add_widget(self.settingscreen)
 		carousel.add_widget(self.timerscreen)
-		carousel.add_widget(StatsScreen(name='stats'))
-		carousel.index = 1
+		carousel.add_widget(self.statscreen)
+		# carousel.index = 1
 		return carousel
 
 	def on_pause(self):

@@ -6,3 +6,8 @@
             text: 'stats'
             font_size: 70
             center: self.parent.center
+
+        Button:
+            text: 'Press Me!'
+            on_press: app.on_pause()
+            on_release: app.on_resume()
