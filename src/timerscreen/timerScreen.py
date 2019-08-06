@@ -117,7 +117,7 @@ class TimerScreen(Screen):
         self.cpb.update()
 
     def update_pb(self):
-        self.pb_value = self.pb_value + self.get_time_sec(time(0, 0, 1)) / self.get_time_sec(self.daily_target) * 100
+        self.pb_value = self.get_time_sec(self.work_time) / self.get_time_sec(self.daily_target) * 100
 
     def get_time_sec(self, time_to_sec):
         return time_to_sec.hour * 3600 + time_to_sec.minute * 60 + time_to_sec.second
