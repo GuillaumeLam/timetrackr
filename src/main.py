@@ -34,7 +34,7 @@ class TimeTrackrApp(App):
 		carousel.add_widget(self.settingscreen)
 		carousel.add_widget(self.timerscreen)
 		carousel.add_widget(self.statscreen)
-		# carousel.index = 1
+		carousel.index = 1
 		return carousel
 
 	def on_pause(self):

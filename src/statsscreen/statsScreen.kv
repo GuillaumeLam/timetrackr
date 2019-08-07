@@ -1,13 +1,26 @@
 #:kivy 1.1.0
 
+<RV>:
+	viewclass: 'Label'
+    RecycleBoxLayout:
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
+
 <StatsScreen>:
 	BoxLayout:
-		Label:
-            text: 'stats'
-            font_size: 70
-            center: self.parent.center
-
-        Button:
-            text: 'Press Me!'
-            on_press: app.on_pause()
-            on_release: app.on_resume()
+		id: stats
+		orientation: 'vertical'
+		canvas:
+            Color:
+                rgba: 0.09, 0.09, 0.09, 1
+            Rectangle:
+                size:
+                    self.width * app.screen_percentage_x, \
+                    self.height * app.screen_percentage_y
+                pos:
+                    self.parent.center_x - self.width * app.screen_percentage_x / 2., \
+                    self.parent.center_y - self.height * app.screen_percentage_y / 2.

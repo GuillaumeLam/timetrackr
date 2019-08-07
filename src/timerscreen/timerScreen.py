@@ -1,6 +1,7 @@
 import kivy
 from datetime import datetime, time, timedelta
 from functools import partial
+from kivy.app import App
 from kivy.clock import Clock
 from kivy.properties import NumericProperty, StringProperty, ColorProperty
 from kivy.uix.screenmanager import Screen
@@ -50,6 +51,10 @@ class TimerScreen(Screen):
                     timedelta(hours=additional_time.hour, minutes=additional_time.minute, seconds=additional_time.second)
                     ).time()
 
+    @staticmethod
+    def get_time_sec(time_to_sec):
+        return time_to_sec.hour * 3600 + time_to_sec.minute * 60 + time_to_sec.second
+
     button_text = StringProperty('START')
     button_color = ColorProperty((0, 1, 0, 1))
 
@@ -66,7 +71,7 @@ class TimerScreen(Screen):
     daily_target = time(8, 0, 0)
     daily_target_label = StringProperty(time_str.__func__(daily_target, True, True, False, 'timer'))
 
-    down_time_limit = time(0, 15, 0)
+    down_time_limit = time(0, 0, 10)
 
     def __init__(self, **kwargs):
         super(TimerScreen, self).__init__(**kwargs)
@@ -84,6 +89,7 @@ class TimerScreen(Screen):
             self.button_color = (1, 0, 0, 1)
 
             if self.get_time_sec(self.down_time) >= self.get_time_sec(self.down_time_limit):
+                self.clock_work_time()
                 self.work_time = time(0, 0, 0)
                 self.work_time_label = self.time_str(self.work_time, True, True, True, 'timer')
                 self.start_session_start()
@@ -119,12 +125,20 @@ class TimerScreen(Screen):
     def update_pb(self):
         self.pb_value = self.get_time_sec(self.work_time) / self.get_time_sec(self.daily_target) * 100
 
-    def get_time_sec(self, time_to_sec):
-        return time_to_sec.hour * 3600 + time_to_sec.minute * 60 + time_to_sec.second
-
     def start_session_start(self):
         self.start_time = datetime.now()
         self.start_time_label = self.time_str(self.start_time, True, True, False, 'day_time')
+
+    def clock_work_time(self):
+        App.get_running_app().statscreen.add_data(
+            self.work_time,
+            self.start_time.replace(microsecond=0),
+            (datetime.now() - timedelta(
+                hours=self.down_time.hour,
+                minutes=self.down_time.minute,
+                seconds=self.down_time.second
+            )).replace(microsecond=0)
+        )
 
 
 class CircularProgressBar(Widget):

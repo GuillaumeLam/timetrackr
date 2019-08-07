@@ -1,7 +1,7 @@
 from datetime import time
 from kivy.app import App
 from kivy.uix.label import Label
-from kivy.uix.modalview import ModalView
+from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
 
 
@@ -27,16 +27,28 @@ class SettingsScreen(Screen):
         m_spin_text = self.ids.m_spin.text
 
         if h_spin_text == '00' and m_spin_text == '00':
-            popup = ModalView(
+            popup = Popup(
+                title='Get better goals',
+                content=Label(text="That's a pretty low goal!"),
                 auto_dismiss=True,
                 size_hint=(None, None),
                 size=(200, 100)
             )
-            popup.add_widget(Label(text="That's a pretty low goal!"))
             popup.open()
             self.ids.h_spin.text = self.h_spin_last_pick
             self.ids.m_spin.text = self.m_spin_last_pick
         else:
+            if int(h_spin_text) >= 20:
+                text = 'Studying is important, but did you know that the bare minimum of sleep needed to live, ' \
+                       'not just thrive, is 4 hours per day'
+                popup = Popup(
+                    title='Get some rest',
+                    content=Label(text=text),
+                    auto_dismiss=True,
+                    size_hint=(None, None),
+                    size=(200, 100)
+                )
+                popup.open()
             self.ts.daily_target = time(int(h_spin_text), int(m_spin_text))
             self.ts.daily_target_label = self.ts.time_str(self.ts.daily_target, True, True, False, 'timer')
 
