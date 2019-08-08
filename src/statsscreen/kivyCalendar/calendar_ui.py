@@ -272,11 +272,12 @@ class CalendarWidget(RelativeLayout):
             elif touch.dpos[0] > 30:
                 self.go_next(None)
 
-    def study_hours_color(self, hours_worked):
-        if hours_worked > 12:
-            hours_worked = 12
+    def study_hours_color(self, sec_worked):
 
-        diff = hours_worked / 12 * 0.5
+        if sec_worked > 12 * 3600:
+            sec_worked = 12 * 3600
+
+        diff = sec_worked / 12 * 3600 * 0.5
 
         g_channel = 0.5 + diff
         rb_channel = 0.5 - diff

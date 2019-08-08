@@ -55,6 +55,14 @@ class TimerScreen(Screen):
     def get_time_sec(time_to_sec):
         return time_to_sec.hour * 3600 + time_to_sec.minute * 60 + time_to_sec.second
 
+    @staticmethod
+    def get_sec_time(sec_to_time):
+        h = sec_to_time // 3600
+        rem = sec_to_time % 3600
+        m = rem // 60
+        sec = rem % 60
+        return time(h, m, sec)
+
     button_text = StringProperty('START')
     button_color = ColorProperty((0, 1, 0, 1))
 
