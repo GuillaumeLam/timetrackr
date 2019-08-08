@@ -277,12 +277,13 @@ class CalendarWidget(RelativeLayout):
         if sec_worked > 12 * 3600:
             sec_worked = 12 * 3600
 
-        diff = sec_worked / 12 * 3600 * 0.5
+        diff = sec_worked / (12 * 3600) * 0.5
 
         g_channel = 0.5 + diff
         rb_channel = 0.5 - diff
 
         return rb_channel, g_channel, rb_channel, 1
+
 
 class ArrowButton(Button):
     pass

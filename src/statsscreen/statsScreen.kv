@@ -1,7 +1,27 @@
 #:kivy 1.1.0
 
+<MultiLabel>:
+	label1_text: 'label 1 text'
+    label2_text: 'label 2 text'
+    label3_text: 'label 3 text'
+    label4_text: 'label 4 text'
+    pos: self.pos
+    size: self.size
+    Label:
+	    id: label1
+	    text: root.label1_text
+	Label:
+	    id: label2
+	    text: root.label2_text
+	Label:
+	    id: label3
+	    text: root.label3_text
+	Label:
+	    id: label4
+	    text: root.label4_text
+
 <RV>:
-	viewclass: 'Label'
+	viewclass: 'MultiLabel'
     RecycleBoxLayout:
         default_size: None, dp(56)
         default_size_hint: 1, None

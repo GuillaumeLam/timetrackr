@@ -10,7 +10,7 @@ from kivy.uix.widget import Widget
 
 class TimerScreen(Screen):
     @staticmethod
-    def time_str(time, hour, min, sec, format):
+    def time_str(time, hour: bool, min: bool, sec: bool, format: str):
         time_str = ''
         if hour:
             time_hour = time.hour
