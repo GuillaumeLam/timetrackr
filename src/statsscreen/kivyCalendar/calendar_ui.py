@@ -111,12 +111,13 @@ class DatePicker(TextInput):
 class CalendarWidget(RelativeLayout):
     """ Basic calendar widget """
 
-    def __init__(self, as_popup=False, touch_switch=False, study_times={}, *args, **kwargs):
+    def __init__(self, as_popup=False, touch_switch=False, study_times={}, button_callack=None, *args, **kwargs):
         super(CalendarWidget, self).__init__(*args, **kwargs)
 
         self.as_popup = as_popup
         self.touch_switch = touch_switch
         self.study_times = study_times
+        self.button_callback = button_callack
         self.prepare_data()
         self.init_ui()
 
@@ -210,6 +211,8 @@ class CalendarWidget(RelativeLayout):
 
         if self.as_popup:
             self.parent_popup.dismiss()
+
+        self.button_callback(self.active_date)
 
     def go_prev(self, inst):
         """ Go to screen with previous month """

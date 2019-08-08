@@ -42,7 +42,6 @@ class RV(RecycleView):
         self.data = self.statsS.data_to_rv_format(self.day['session'])
 
         work_time = self.timerS.get_sec_time(self.day['work_time'])
-        print(work_time)
         self.statsS.day_label.text = 'Day Total: ' + str(work_time.hour) + 'h' + str(work_time.minute) + 'min'
 
     def change_day(self, date):
@@ -55,11 +54,9 @@ class StatsScreen(Screen):
     def __init__(self, **kwargs):
         super(StatsScreen, self).__init__(**kwargs)
         self.ts = App.get_running_app().timerscreen
-        self.data = {(7,8,2019):{'session': [(datetime.time(20, 25, 38), datetime.time(22, 25, 39), datetime.time(2, 0, 1))], 'work_time': 7201}}      # TODO load from storage
-        self.calendar_data = {k: v['work_time'] for k, v in self.data.items()}
-        self.calendar = CalendarWidget(study_times=self.calendar_data)
-        self.ids.stats.add_widget(self.calendar)
 
+        self.data = {(7,8,2019):{'session': [(datetime.time(20, 25, 38), datetime.time(22, 25, 39), datetime.time(2, 0, 1))], 'work_time': 7201}}      # TODO load from storage
+        today = (datetime.datetime.now().day, datetime.datetime.now().month, datetime.datetime.now().year)
         self.day_label = Label(
             text='Day Total: ' + str(0) + 'h' + str(0) + 'min',
             size_hint=(1, 0.15)
@@ -68,10 +65,14 @@ class StatsScreen(Screen):
             text='Insert table headers',
             size_hint=(1, 0.15)
         )
+        self.rv = RV(session_data=self.data, date=today, timerScreen=self.ts, statsScreen=self)
+        self.calendar_data = {k: v['work_time'] for k, v in self.data.items()}
+        self.calendar = CalendarWidget(study_times=self.calendar_data, button_callack=self.rv.change_day)
+
+        self.ids.stats.add_widget(self.calendar)
         self.ids.stats.add_widget(self.day_label)
         self.ids.stats.add_widget(self.rb_header_label)
 
-        self.rv = RV(session_data=self.data, date=self.calendar.active_date, timerScreen=self.ts, statsScreen=self)
         self.ids.stats.add_widget(self.rv)
 
     def add_data(self, work_time, start_time, end_time):
