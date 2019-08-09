@@ -20,18 +20,9 @@
             size_hint: None, None
             size: self.parent.width * app.screen_percentage_x, self.parent.height * app.screen_percentage_y * app.stats_subdivision_y
 			pos_hint: {'x': (1 - app.screen_percentage_x)/2., 'y': (1 - app.screen_percentage_y * app.stats_subdivision_y)/2.}
-#			canvas:
-#                Color:
-#                    rgba: 1, 0.1, 0.1, 0.5
-#                Rectangle:
-#                    size:
-#                        self.width,self.height
-#                    pos:
-#                        self.x, self.y
             Label:
                 text: 'Daily Work Goal:'
                 font_size: sp(30)
-#                size: self.parent.width, self.parent.height * app.stats_subdivision_y
 	        Spinner:
 	            id: h_spin
 	            text: root.h_spin_default

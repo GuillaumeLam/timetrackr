@@ -10,34 +10,34 @@ from kivy.uix.widget import Widget
 
 class TimerScreen(Screen):
     @staticmethod
-    def time_str(time, hour: bool, min: bool, sec: bool, format: str):
+    def time_str(time_to_str, hour: bool, min: bool, sec: bool, form: str):
         time_str = ''
         if hour:
-            time_hour = time.hour
-            if format == 'day_time':
+            time_hour = time_to_str.hour
+            if form == 'day_time':
                 if time_hour < 10:
                     time_str = time_str + '0' + str(time_hour)
                 else:
                     time_str = time_str + str(time_hour)
-            elif format == 'timer':
+            elif form == 'timer':
                 time_str = time_str + str(time_hour) + 'h'
         if min:
-            time_min = time.minute
-            if format == 'day_time':
+            time_min = time_to_str.minute
+            if form == 'day_time':
                 if time_min < 10:
                     time_str = time_str + ':0' + str(time_min)
                 else:
                     time_str = time_str + ':' + str(time_min)
-            elif format == 'timer':
+            elif form == 'timer':
                 time_str = time_str + ' ' + str(time_min) + 'min'
         if sec:
-            time_sec = time.second
-            if format == 'day_time':
+            time_sec = time_to_str.second
+            if form == 'day_time':
                 if time_sec < 10:
                     time_str = time_str + ':0' + str(time_sec)
                 else:
                     time_str = time_str + ':' + str(time_sec)
-            elif format == 'timer':
+            elif form == 'timer':
                 time_str = time_str + ' ' + str(time_sec) + 's'
 
         return time_str

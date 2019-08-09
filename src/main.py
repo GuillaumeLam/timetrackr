@@ -9,7 +9,6 @@ from timerscreen.timerScreen import TimerScreen
 
 
 class TimeTrackrApp(App):
-
 	screen_percentage_x = NumericProperty(0.975)
 	screen_percentage_y = NumericProperty(0.99)
 	button_x = NumericProperty(0.9)

@@ -1,15 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-###########################################################
-# KivyCalendar (X11/MIT License)
-# Calendar & Date picker widgets for Kivy (http://kivy.org)
-# https://bitbucket.org/xxblx/kivycalendar
-#
-# Oleg Kozlov (xxblx), 2015
-# https://xxblx.bitbucket.org/
-###########################################################
-
 from calendar import month_name, day_abbr, Calendar, monthrange
 from datetime import datetime
 from locale import getdefaultlocale

@@ -1,14 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-###########################################################
-# KivyCalendar (X11/MIT License)
-# Calendar & Date picker widgets for Kivy (http://kivy.org)
-# https://bitbucket.org/xxblx/kivycalendar
-#
-# Oleg Kozlov (xxblx), 2015
-# https://xxblx.bitbucket.org/
-###########################################################
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup

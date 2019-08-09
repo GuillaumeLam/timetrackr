@@ -1,13 +1,11 @@
+import datetime
 from kivy.app import App
-from kivy.properties import StringProperty
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.uix.screenmanager import Screen
 from statsscreen.kivyCalendar import CalendarWidget
-
-import datetime
 
 
 class MultiLabel(RecycleDataViewBehavior, GridLayout):
@@ -27,18 +25,17 @@ class MultiLabel(RecycleDataViewBehavior, GridLayout):
 class RV(RecycleView):
     day = {'session': [], 'work_time': 0}
 
-    def __init__(self, timerScreen, statsScreen, session_data={}, date=(), **kwargs):
+    def __init__(self, timerscreen, statsscreen, session_data={}, date=(), **kwargs):
         super(RV, self).__init__(**kwargs)
         self.session_data = session_data
-        self.timerS = timerScreen
-        self.statsS = statsScreen
+        self.timerS = timerscreen
+        self.statsS = statsscreen
         self.date = date
         self.update()
 
     def update(self):
         self.day = self.session_data[(self.date[0], self.date[1], self.date[2])] \
-            if (self.date[0], self.date[1], self.date[2]) in \
-               self.session_data else {'session': [], 'work_time': 0}
+            if (self.date[0], self.date[1], self.date[2]) in self.session_data else {'session': [], 'work_time': 0}
         self.data = self.statsS.data_to_rv_format(self.day['session'])
 
         work_time = self.timerS.get_sec_time(self.day['work_time'])
@@ -55,7 +52,7 @@ class StatsScreen(Screen):
         super(StatsScreen, self).__init__(**kwargs)
         self.ts = App.get_running_app().timerscreen
 
-        self.data = {(7,8,2019):{'session': [(datetime.time(20, 25, 38), datetime.time(22, 25, 39), datetime.time(2, 0, 1))], 'work_time': 7201}}      # TODO load from storage
+        self.data = {}      # TODO load from storage
         today = (datetime.datetime.now().day, datetime.datetime.now().month, datetime.datetime.now().year)
         self.day_label = Label(
             text='Day Total: ' + str(0) + 'h' + str(0) + 'min',
@@ -65,7 +62,7 @@ class StatsScreen(Screen):
             text='Insert table headers',
             size_hint=(1, 0.15)
         )
-        self.rv = RV(session_data=self.data, date=today, timerScreen=self.ts, statsScreen=self)
+        self.rv = RV(session_data=self.data, date=today, timerscreen=self.ts, statsscreen=self)
         self.calendar_data = {k: v['work_time'] for k, v in self.data.items()}
         self.calendar = CalendarWidget(study_times=self.calendar_data, button_callack=self.rv.change_day)
 
@@ -92,22 +89,11 @@ class StatsScreen(Screen):
 
         self.rv.update()
 
-        # day = self.data[(start_time.day, start_time.month, start_time.year)]
-        #
-        # self.rv.data = self.data_to_rv_format(day['session'])
-        # work_time = self.ts.get_sec_time(day['work_time'])
-        #
-        # #
-        # self.day_label.text = 'Day Total: ' + str(work_time.hour) + 'h' + str(work_time.minute) + 'min'
-        # #
-
     def data_to_rv_format(self, session_list):
         return list(map(lambda data:
                         {'label1': {'text': self.ts.time_str(data[0], True, True, False, 'day_time')},
-                        'label2': {'text': self.ts.time_str(data[1], True, True, False, 'day_time')},
-                        'label3': {'text': self.ts.time_str(data[2], True, True, True, 'timer')},
-                        'label4': {'text': str(self.ts.get_time_sec(data[2]) * 100 / (
+                         'label2': {'text': self.ts.time_str(data[1], True, True, False, 'day_time')},
+                         'label3': {'text': self.ts.time_str(data[2], True, True, True, 'timer')},
+                         'label4': {'text': str(self.ts.get_time_sec(data[2]) * 100 / (
                                 self.ts.get_time_sec(data[1]) - self.ts.get_time_sec(data[0]))) + "%"},
                          }, session_list))
-
-    # def update_session_data(self):
