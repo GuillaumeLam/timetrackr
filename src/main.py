@@ -1,3 +1,4 @@
+import os
 import pickle
 from datetime import datetime
 from kivy.app import App
@@ -23,6 +24,15 @@ class TimeTrackrApp(App):
 	def __init__(self):
 		App.__init__(self)
 		self.file_dir = join(self.user_data_dir, self.app_data_file)
+
+		if os.path.exists(self.file_dir):
+			with open(App.get_running_app().file_dir, 'rb') as file:
+				self.app_data = pickle.load(file)
+		else:
+			self.app_data = {}
+			with open(self.file_dir, 'wb') as file:
+				pickle.dump(self.app_data, file)
+
 		self.settingscreen = None
 		self.timerscreen = None
 		self.statscreen = None
@@ -43,7 +53,7 @@ class TimeTrackrApp(App):
 	def on_pause(self):
 		self.pause_time = datetime.now()
 		with open(self.file_dir, 'wb') as file:
-			pickle.dump(self.statscreen.data, file)
+			pickle.dump(self.app_data, file)
 		return True
 
 	def on_resume(self):

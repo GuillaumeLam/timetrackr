@@ -51,16 +51,16 @@ class RV(RecycleView):
 
 
 class StatsScreen(Screen):
-    session_data_index_key = 'session_data'
-    session_data_key = 'data'
+    session_data_key = 'session_data'
 
     def __init__(self, **kwargs):
         super(StatsScreen, self).__init__(**kwargs)
         self.ts = App.get_running_app().timerscreen
 
-        if os.path.exists(App.get_running_app().file_dir):
-            with open(App.get_running_app().file_dir, 'rb') as file:
-                self.data = pickle.load(file)
+        self.app = App.get_running_app()
+
+        if self.session_data_key in self.app.app_data:
+            self.data = self.app.app_data[self.session_data_key]
         else:
             self.data = {}
 
@@ -122,8 +122,13 @@ class StatsScreen(Screen):
 
         self.rv.update()
 
-        with open(App.get_running_app().file_dir, 'wb') as file:
-            pickle.dump(self.data, file)
+        with open(self.app.file_dir, 'rb') as file:
+            file_data = pickle.load(file)
+
+        file_data[self.session_data_key] = self.data
+
+        with open(self.app.file_dir, 'wb') as file:
+            pickle.dump(file_data, file)
 
     def data_to_rv_format(self, session_list):
         return list(map(lambda data:
