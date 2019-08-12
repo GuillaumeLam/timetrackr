@@ -1,5 +1,9 @@
 import datetime
+import os
+import pickle
 from kivy.app import App
+from kivy.metrics import sp
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.recycleview import RecycleView
@@ -47,28 +51,57 @@ class RV(RecycleView):
 
 
 class StatsScreen(Screen):
+    session_data_index_key = 'session_data'
+    session_data_key = 'data'
 
     def __init__(self, **kwargs):
         super(StatsScreen, self).__init__(**kwargs)
         self.ts = App.get_running_app().timerscreen
 
-        self.data = {}      # TODO load from storage
+        if os.path.exists(App.get_running_app().file_dir):
+            with open(App.get_running_app().file_dir, 'rb') as file:
+                self.data = pickle.load(file)
+        else:
+            self.data = {}
+
         today = (datetime.datetime.now().day, datetime.datetime.now().month, datetime.datetime.now().year)
         self.day_label = Label(
             text='Day Total: ' + str(0) + 'h' + str(0) + 'min',
             size_hint=(1, 0.15)
         )
-        self.rb_header_label = Label(
-            text='Insert table headers',
+        label_font = sp(12.5)
+        self.table_header = BoxLayout(
+            orientation='horizontal',
             size_hint=(1, 0.15)
         )
+        self.header_label1 = Label(
+            text='Start Time',
+            font_size=label_font
+        )
+        self.header_label2 = Label(
+            text='End Time',
+            font_size=label_font
+        )
+        self.header_label3 = Label(
+            text='Session Total',
+            font_size=label_font
+        )
+        self.header_label4 = Label(
+            text='Session Efficiency',
+            font_size=label_font
+        )
+        self.table_header.add_widget(self.header_label1)
+        self.table_header.add_widget(self.header_label2)
+        self.table_header.add_widget(self.header_label3)
+        self.table_header.add_widget(self.header_label4)
+
         self.rv = RV(session_data=self.data, date=today, timerscreen=self.ts, statsscreen=self)
         self.calendar_data = {k: v['work_time'] for k, v in self.data.items()}
         self.calendar = CalendarWidget(study_times=self.calendar_data, button_callack=self.rv.change_day)
 
         self.ids.stats.add_widget(self.calendar)
         self.ids.stats.add_widget(self.day_label)
-        self.ids.stats.add_widget(self.rb_header_label)
+        self.ids.stats.add_widget(self.table_header)
 
         self.ids.stats.add_widget(self.rv)
 
@@ -89,11 +122,14 @@ class StatsScreen(Screen):
 
         self.rv.update()
 
+        with open(App.get_running_app().file_dir, 'wb') as file:
+            pickle.dump(self.data, file)
+
     def data_to_rv_format(self, session_list):
         return list(map(lambda data:
                         {'label1': {'text': self.ts.time_str(data[0], True, True, False, 'day_time')},
                          'label2': {'text': self.ts.time_str(data[1], True, True, False, 'day_time')},
                          'label3': {'text': self.ts.time_str(data[2], True, True, True, 'timer')},
-                         'label4': {'text': str(self.ts.get_time_sec(data[2]) * 100 / (
-                                self.ts.get_time_sec(data[1]) - self.ts.get_time_sec(data[0]))) + "%"},
+                         'label4': {'text': str('%.3f'%(self.ts.get_time_sec(data[2]) * 100 / (
+                                self.ts.get_time_sec(data[1]) - self.ts.get_time_sec(data[0])))) + "%"},
                          }, session_list))

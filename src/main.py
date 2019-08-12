@@ -1,7 +1,9 @@
+import pickle
 from datetime import datetime
 from kivy.app import App
 from kivy.properties import NumericProperty
 from kivy.uix.carousel import Carousel
+from os.path import join
 
 from settingsscreen.settingsScreen import SettingsScreen
 from statsscreen.statsScreen import StatsScreen
@@ -9,6 +11,7 @@ from timerscreen.timerScreen import TimerScreen
 
 
 class TimeTrackrApp(App):
+	app_data_file = 'timetrackr_data.pickle'
 	screen_percentage_x = NumericProperty(0.975)
 	screen_percentage_y = NumericProperty(0.99)
 	button_x = NumericProperty(0.9)
@@ -19,6 +22,7 @@ class TimeTrackrApp(App):
 
 	def __init__(self):
 		App.__init__(self)
+		self.file_dir = join(self.user_data_dir, self.app_data_file)
 		self.settingscreen = None
 		self.timerscreen = None
 		self.statscreen = None
@@ -38,6 +42,8 @@ class TimeTrackrApp(App):
 
 	def on_pause(self):
 		self.pause_time = datetime.now()
+		with open(self.file_dir, 'wb') as file:
+			pickle.dump(self.statscreen.data, file)
 		return True
 
 	def on_resume(self):
