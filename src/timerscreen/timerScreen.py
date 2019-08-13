@@ -135,6 +135,12 @@ class TimerScreen(Screen):
         self.start_time = datetime.now()
         self.start_time_label = self.time_str(self.start_time, True, True, False, 'day_time')
 
+    def down_time_check(self):
+        if self.get_time_sec(self.down_time) >= self.get_time_sec(self.down_time_limit):
+            self.clock_work_time()
+            if type(self.down_clock) is kivy._clock.ClockEvent:
+                self.down_clock.cancel()
+
     def clock_work_time(self):
         App.get_running_app().statscreen.add_data(
             self.work_time,
@@ -145,12 +151,6 @@ class TimerScreen(Screen):
                 seconds=self.down_time.second
             )).replace(microsecond=0)
         )
-
-    def down_time_check(self):
-        if self.get_time_sec(self.down_time) >= self.get_time_sec(self.down_time_limit):
-            self.clock_work_time()
-            if type(self.down_clock) is kivy._clock.ClockEvent:
-                self.down_clock.cancel()
 
 
 class CircularProgressBar(Widget):
