@@ -1,6 +1,6 @@
 import os
 import pickle
-from datetime import datetime, timedelta
+from datetime import datetime
 from kivy.app import App
 from kivy.properties import NumericProperty
 from kivy.uix.carousel import Carousel

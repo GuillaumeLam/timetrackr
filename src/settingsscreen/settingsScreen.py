@@ -67,3 +67,6 @@ class SettingsScreen(Screen):
             self.ids.m_spin.text = '0' + str(minute)
         else:
             self.ids.m_spin.text = str(minute)
+
+    def delete_session_data(self):
+        self.app.statscreen.delete_session_data()

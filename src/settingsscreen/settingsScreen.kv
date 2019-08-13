@@ -15,6 +15,14 @@
 	                self.parent.center_x - self.width * app.screen_percentage_x / 2., \
 	                self.parent.center_y - self.height * app.screen_percentage_y / 2.
 
+		BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            size: self.parent.width * app.screen_percentage_x, self.parent.height * app.screen_percentage_y * app.stats_subdivision_y
+            pos_hint: {'x': (1 - app.screen_percentage_x)/2., 'y': (1 - app.screen_percentage_y * app.stats_subdivision_y)/2.}
+			Button:
+				text: 'Delete session data'
+				on_press: root.delete_session_data()
         BoxLayout:
             orientation: 'horizontal'
             size_hint: None, None

@@ -1,6 +1,4 @@
 import datetime
-import os
-import pickle
 from kivy.app import App
 from kivy.metrics import sp
 from kivy.uix.boxlayout import BoxLayout
@@ -132,3 +130,9 @@ class StatsScreen(Screen):
                          'label4': {'text': str('%.3f'%(self.ts.get_time_sec(data[2]) * 100 / (
                                 self.ts.get_time_sec(data[1]) - self.ts.get_time_sec(data[0])))) + "%"},
                          }, session_list))
+
+    def delete_session_data(self):
+        self.data = {}
+        self.rv.session_data = {}
+        self.rv.update()
+        self.app.app_data[self.session_data_key] = {}
