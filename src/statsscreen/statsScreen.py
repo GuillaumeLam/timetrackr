@@ -122,13 +122,7 @@ class StatsScreen(Screen):
 
         self.rv.update()
 
-        with open(self.app.file_dir, 'rb') as file:
-            file_data = pickle.load(file)
-
-        file_data[self.session_data_key] = self.data
-
-        with open(self.app.file_dir, 'wb') as file:
-            pickle.dump(file_data, file)
+        self.app.app_data[self.session_data_key] = self.data
 
     def data_to_rv_format(self, session_list):
         return list(map(lambda data:

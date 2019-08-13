@@ -78,8 +78,10 @@ class TimerScreen(Screen):
 
     daily_target = time(8, 0, 0)
     daily_target_label = StringProperty(time_str.__func__(daily_target, True, True, False, 'timer'))
+    daily_target_key = 'daily_target'
 
     down_time_limit = time(0, 0, 10)
+    down_time_limit_key = 'down_time_limit'
 
     def __init__(self, **kwargs):
         super(TimerScreen, self).__init__(**kwargs)
@@ -89,6 +91,9 @@ class TimerScreen(Screen):
 
         self.cpb = self.ids.cpb
         self.cpb.update()
+
+        self.app = App.get_running_app()
+        self.load_stored_data()
 
     def toggle(self):
         if self.time_state == 'stopped':
@@ -151,6 +156,18 @@ class TimerScreen(Screen):
                 seconds=self.down_time.second
             )).replace(microsecond=0)
         )
+
+    def load_stored_data(self):
+        if self.daily_target_key in self.app.app_data:
+            daily_target_time = self.app.app_data[self.daily_target_key]
+            self.daily_target = time(daily_target_time['hour'], daily_target_time['minute'])
+
+        if self.down_time_limit_key in self.app.app_data:
+            down_time_limit_time = self.app.app_data[self.down_time_limit_key]
+            self.down_time_limit = time(0, down_time_limit_time['minute'], down_time_limit_time['second'])
+
+    def store_daily_target(self, h, m):
+        self.app.app_data[self.daily_target_key] = {'hour': h, 'minute': m}
 
 
 class CircularProgressBar(Widget):

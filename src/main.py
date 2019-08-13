@@ -52,8 +52,7 @@ class TimeTrackrApp(App):
 
 	def on_pause(self):
 		self.pause_time = datetime.now()
-		with open(self.file_dir, 'wb') as file:
-			pickle.dump(self.app_data, file)
+		self.store_app_data()
 		return True
 
 	def on_resume(self):
@@ -64,6 +63,10 @@ class TimeTrackrApp(App):
 			self.timerscreen.work_time = self.timerscreen.add_time(self.timerscreen.work_time, pause_time)
 		elif self.timerscreen.time_state == 'stopped':
 			self.timerscreen.down_time = self.timerscreen.add_time(self.timerscreen.down_time, pause_time)
+
+	def store_app_data(self):
+		with open(self.file_dir, 'wb') as file:
+			pickle.dump(self.app_data, file)
 
 
 TimeTrackrApp().run()

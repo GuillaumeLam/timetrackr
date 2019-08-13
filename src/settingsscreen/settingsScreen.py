@@ -15,11 +15,10 @@ class SettingsScreen(Screen):
     h_spin_last_pick = None
     m_spin_last_pick = None
 
-    ts = None
-
     def __init__(self, **kwargs):
         super(SettingsScreen, self).__init__(**kwargs)
-        self.ts = App.get_running_app().timerscreen
+        self.app = App.get_running_app()
+        self.ts = self.app.timerscreen
         self.set_default_spinner(self.ts.daily_target)
 
     def on_spinner_select(self):
@@ -50,6 +49,7 @@ class SettingsScreen(Screen):
                 )
                 popup.open()
             self.ts.daily_target = time(int(h_spin_text), int(m_spin_text))
+            self.ts.store_daily_target(int(h_spin_text), int(m_spin_text))
             self.ts.daily_target_label = self.ts.time_str(self.ts.daily_target, True, True, False, 'timer')
 
             self.h_spin_last_pick = h_spin_text
