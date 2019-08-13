@@ -64,6 +64,9 @@ class TimeTrackrApp(App):
 		elif self.timerscreen.time_state == 'stopped':
 			self.timerscreen.down_time = self.timerscreen.add_time(self.timerscreen.down_time, pause_time)
 
+	def on_stop(self):
+		self.store_app_data()
+
 	def store_app_data(self):
 		with open(self.file_dir, 'wb') as file:
 			pickle.dump(self.app_data, file)
