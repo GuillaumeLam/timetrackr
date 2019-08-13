@@ -1,6 +1,6 @@
 import os
 import pickle
-from datetime import datetime
+from datetime import datetime, timedelta
 from kivy.app import App
 from kivy.properties import NumericProperty
 from kivy.uix.carousel import Carousel
@@ -63,6 +63,13 @@ class TimeTrackrApp(App):
 		if self.timerscreen.time_state == 'running':
 			self.timerscreen.work_time = self.timerscreen.add_time(self.timerscreen.work_time, pause_time)
 		elif self.timerscreen.time_state == 'stopped':
+			if pause_time > timedelta(
+					minutes=self.timerscreen.down_time_limit.minutes,
+					seconds=self.timerscreen.down_time_limit.seconds):
+				pause_time = timedelta(
+					minutes=self.timerscreen.down_time_limit.minutes,
+					seconds=self.timerscreen.down_time_limit.seconds
+				)
 			self.timerscreen.down_time = self.timerscreen.add_time(self.timerscreen.down_time, pause_time)
 
 

@@ -97,12 +97,7 @@ class TimerScreen(Screen):
             self.button_color = (1, 0, 0, 1)
 
             if self.get_time_sec(self.down_time) >= self.get_time_sec(self.down_time_limit):
-                self.clock_work_time()
-                self.work_time = time(0, 0, 0)
-                self.work_time_label = self.time_str(self.work_time, True, True, True, 'timer')
-                self.start_session_start()
-            elif self.get_time_sec(self.down_time) == self.get_time_sec(time(0, 0, 0)):
-                self.start_session_start()
+                self.session_start()
 
             self.down_time = time(0, 0, 0)
 
@@ -127,13 +122,16 @@ class TimerScreen(Screen):
             self.update_pb()
         elif work_or_down == 'down':
             self.down_time = self.add_time(self.down_time, time(0, 0, 1))
+            self.down_time_check()
 
         self.cpb.update()
 
     def update_pb(self):
         self.pb_value = self.get_time_sec(self.work_time) / self.get_time_sec(self.daily_target) * 100
 
-    def start_session_start(self):
+    def session_start(self):
+        self.work_time = time(0, 0, 0)
+        self.work_time_label = self.time_str(self.work_time, True, True, True, 'timer')
         self.start_time = datetime.now()
         self.start_time_label = self.time_str(self.start_time, True, True, False, 'day_time')
 
@@ -147,6 +145,12 @@ class TimerScreen(Screen):
                 seconds=self.down_time.second
             )).replace(microsecond=0)
         )
+
+    def down_time_check(self):
+        if self.get_time_sec(self.down_time) >= self.get_time_sec(self.down_time_limit):
+            self.clock_work_time()
+            if type(self.down_clock) is kivy._clock.ClockEvent:
+                self.down_clock.cancel()
 
 
 class CircularProgressBar(Widget):
