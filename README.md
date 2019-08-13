@@ -8,9 +8,17 @@ An app to track working time
 Ever wondered how much time are you actually studying? Or maybe you're looking to optimize the time you are studying to 
 be even more efficient? Well look no further! 
 
-
-<img src="https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-settings.png" height="33.3%" width="32%"> <img src="https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-main.png" height="33.3%" width="32%"> <img src="https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-stats.png" height="33.3%" width="32%">
-
+<div>
+	<div class='inline-block'>
+		<img src="https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-settings.png" height="33.3%" width="32%">
+	</div>
+	<div class='inline-block'>
+		<img src="https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-main.png" height="33.3%" width="32%">
+	</div>
+	<div class='inline-block'>
+		<img src="https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-stats.png" height="33.3%" width="32%">
+	</div>
+</div>
 
 With this mobile/desktop app, you can solve those problems. Simply press **Start** when you start working and press 
 **Stop** when taking a small break or you're done working. With a session based system, you track how long you worked in
