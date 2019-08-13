@@ -65,6 +65,8 @@ class TimeTrackrApp(App):
 			self.timerscreen.down_time = self.timerscreen.add_time(self.timerscreen.down_time, pause_time)
 
 	def on_stop(self):
+		if self.timerscreen.time_state == 'running':
+			self.timerscreen.clock_work_time()
 		self.store_app_data()
 
 	def store_app_data(self):
