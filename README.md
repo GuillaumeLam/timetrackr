@@ -9,11 +9,9 @@ Ever wondered how much time are you actually studying? Or maybe you're looking t
 be even more efficient? Well look no further! 
 
 
-![alt text][settings] ![alt text][main] ![alt text][stats]
-
-[settings]: https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-settings.png "Settings Page"
-[main]: https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-main.png "Main Page"
-[stats]: https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-stats.png "Statistics Page"
+![alt text](https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-settings.png "Settings Page") <!-- .element height="33.3%" width="33.3%" -->
+![alt text](https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-main.png "Main Page") <!-- .element height="33.3%" width="33.3%" -->
+![alt text](https://github.com/GuillaumeLam/timetrackr/blob/master/assets/app-screenshots/timetracker-stats.png "Statistics Page") <!-- .element height="33.3%" width="33.3%" -->
 
 
 With this mobile/desktop app, you can solve those problems. Simply press **Start** when you start working and press 
