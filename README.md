@@ -41,7 +41,28 @@ session, you can check how efficient you were during that session.
 ## Technologies
 
 This app runs using Kivy. As such, most of the codebase is python. To get some extra modules, kivy-garden was also of 
-help.
+help. The virtualenv is created using pipenv. Finally, to generate the apk, buildozer is utilized.
+
+To start the virtualenv, run the command:
+```
+pipenv install
+```
+Followed by this command to initialize the shell:
+```
+pipenv shell
+```
+
+To run the app, simply run this command from the root folder of the project:
+```
+python scr/main.py
+```
+
+Finally, to create the apk and create a gzip to pass around:
+```
+make all
+```
+
+The apk and the .gzip should be in the bin folder!
 
 
 ## Deployment
